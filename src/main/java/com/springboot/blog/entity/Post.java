@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,4 +29,9 @@ public class Post {
 
     @Column(nullable = false)
     private String content;
+
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true) //orphanRemover remove child if parent is removed
+    // used set here instead of list because list allows duplicate but set does not
+    private Set<Comment> comments = new HashSet<>();
 }
